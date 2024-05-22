@@ -6,7 +6,7 @@
 /*   By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:26:28 by hulefevr          #+#    #+#             */
-/*   Updated: 2024/05/22 17:44:44 by hulefevr         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:14:40 by hulefevr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	is_sorted(t_list *stack)
 	head = stack;
 	while (head && head->next)
 	{
-		printf("content = %i\n", head->content);
 		if (head->content > head->next->content)
 			return (0);
 		head = head->next;
@@ -77,5 +76,5 @@ void	free_stack(t_list *stack)
 		head = head->next;
 		free(tmp);
 	}
-	free(stack);
+	// free(stack);
 }
