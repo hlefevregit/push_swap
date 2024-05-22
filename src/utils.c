@@ -6,7 +6,7 @@
 /*   By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:26:28 by hulefevr          #+#    #+#             */
-/*   Updated: 2024/05/22 18:14:40 by hulefevr         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:28:21 by hulefevr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_list	*get_next_min(t_list *stack)
 	{
 		while (head)
 		{
-			if ((head->index == -1) && (!has_min || head->content < min->content))
+			if ((head->index < 0) && (!has_min || head->content < min->content))
 			{
 				min = head;
 				has_min = 1;

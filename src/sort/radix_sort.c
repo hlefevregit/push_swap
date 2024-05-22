@@ -6,7 +6,7 @@
 /*   By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:44:31 by hulefevr          #+#    #+#             */
-/*   Updated: 2024/05/22 17:43:47 by hulefevr         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:30:51 by hulefevr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,16 @@ static int	get_max_bits(t_list *stack)
 	head = stack;
 	max = head->index;
 	max_bits = 0;
-	while (head)
+	while (head && head->next)
 	{
 		if (head->index > max)
 			max = head->index;
 		head = head->next;
 	}
 	while ((max >> max_bits) != 0)
+	{
 		max_bits++;
+	}
 	return (max_bits);
 }
 
@@ -41,9 +43,13 @@ void	radix_sort(t_stack stack)
 	int		max_bits;
 
 	i = 0;
+	printf("JYSUIS\n");
 	head_a = stack.a;
+	printf("head_a = %i\n", head_a->content);
 	size = ft_lstsize(head_a);
-	max_bits = get_max_bits(stack.a);
+	printf("size = %i\n", size);
+	max_bits = get_max_bits(head_a);
+	printf("max_bits = %i\n", max_bits);
 	while (i < max_bits)
 	{
 		j = 0;
