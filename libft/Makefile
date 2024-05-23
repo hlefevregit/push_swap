@@ -6,7 +6,7 @@
 #    By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 09:31:16 by hulefevr          #+#    #+#              #
-#    Updated: 2024/05/22 16:23:51 by hulefevr         ###   ########.fr        #
+#    Updated: 2024/05/23 15:58:05 by hulefevr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,6 @@ SRCS =	ft_atoi.c \
 		ft_substr.c \
 		ft_tolower.c \
 		ft_toupper.c \
-		ft_lstadd_back.c \
-		ft_lstadd_front.c \
 		ft_lstlast.c \
 		ft_lstnew.c \
 		ft_lstsize.c \

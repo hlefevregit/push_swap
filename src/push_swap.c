@@ -6,67 +6,85 @@
 /*   By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:01:23 by hulefevr          #+#    #+#             */
-/*   Updated: 2024/05/22 18:14:16 by hulefevr         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:46:45 by hulefevr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_list	*ft_init_stack(int ac, char **av)
+void	initialize_stacks(int argc, char **argv, t_stack *s)
 {
-	char	**args;
-	t_list	*a;
+	int	i;
+
+	i = 0;
+	s->a_size = 0;
+	s->b_size = 0;
+	while (--argc)
+	{
+		if (ft_count_words(argv[i + 1], ' '))
+			s->a_size += ft_count_words(argv[i + 1], ' ');
+		else
+			s->a_size++;
+		i++;
+	}
+	s->a = malloc(s->a_size * sizeof * s->a);
+	if (s->a == NULL)
+		free_and_exit_with_message(s, "Error\n");
+	s->b = malloc(s->a_size * sizeof * s->b);
+	if (s->b == NULL)
+		free_and_exit_with_message(s, "Error\n");
+}
+
+static void	join_args(int argc, char **argv, t_stack *s)
+{
+	char	*tmp;
+	char	*tmp2;
 	int		i;
 
 	i = 0;
-	if (ac == 2)
-		args = ft_split(av[1], ' ');
-	else
+	tmp2 = ft_strdup("");
+	while (++i < argc && argv[i] != NULL)
 	{
-		i = 1;
-		args = av;
+		tmp = ft_strjoin(tmp2, argv[i]);
+		if (tmp2)
+			free(tmp2);
+		if (i != argc - 1)
+		{
+			tmp2 = ft_strjoin(tmp, " ");
+			if (tmp)
+				free(tmp);
+			tmp = tmp2;
+		}
 	}
-	a = ft_lstnew(ft_atoi(args[i]));
-	printf("lst[%i] = %i\n", i, ft_lstlast(a)->content);
-	i++;
-	while (args[i])
-	{
-		ft_lstadd_back(&a, ft_lstnew(ft_atoi(args[i])));
-		printf("lst[%i] = %i\n", i, ft_lstlast(a)->content);
-		i++;
-	}
-	index_stack(a);
-	if (ac == 2)
-		ft_free(args);
-	return (a);
+	s->args = ft_strdup(tmp);
+	if (s->args == NULL)
+		free_and_exit_with_message(s, "Error\n");
+	if (tmp)
+		free(tmp);
 }
 
-static void	sort_stack(t_stack stack)
+int	main(int argc, char **argv)
 {
-	if (ft_lstsize(stack.a) <= 5)
-		sort_3_to_5(stack);
+	t_stack	*s;
+
+	validate_arguments(argc, argv);
+	s = malloc(sizeof * s);
+	if (s == NULL)
+		exit(1);
+	initialize_stacks(argc, argv, s);
+	join_args(argc, argv, s);
+	parse_numbers(s);
+	exit_if_sorted_or_has_duplicate(s, 0);
+	create_index(s);
+	if (s->a_size == 2 && s->a[0] > s->a[1])
+		swap("sa", s->a, s->a_size);
+	else if (s->a_size == 3)
+		sort_three_elements(s);
+	else if (s->a_size >= 4 && s->a_size <= 5)
+		sort_four_to_five_elements(s);
 	else
-		radix_sort(stack);
-}
-
-int	main(int ac, char **av)
-{
-	t_stack	stack;
-
-	if (ac < 2)
-		return (ft_strerror());
-	if (ft_check_args(ac, av) == -1)
-		return (ft_strerror());
-	stack.b = NULL;
-	stack.a = ft_init_stack(ac, av);
-	if (is_sorted(stack.a) == 1)
-	{
-		printf("ALREDAY SORTED\n");
-		free_stack(stack.a);
-		return (0);
-	}
-	sort_stack(stack);
-	free_stack(stack.a);
-	free_stack(stack.b);
+		radix_sort(s);
+	exit_if_sorted_or_has_duplicate(s, 1);
+	free_and_exit_with_message(s, "Error\n");
 	return (0);
 }

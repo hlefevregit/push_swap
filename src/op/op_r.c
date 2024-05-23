@@ -6,49 +6,57 @@
 /*   By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:44:29 by hulefevr          #+#    #+#             */
-/*   Updated: 2024/05/22 17:40:35 by hulefevr         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:38:03 by hulefevr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-int	ra(t_stack stack)
+/*int	ra(t_list **stack_a)
 {
-	if (rotate(stack.a) == -1)
+	if (rotate(stack_a) == -1)
 		return (-1);
 	ft_putendl_fd("ra", 1);
 	return (0);
 }
 
-int	rb(t_stack stack)
+int	rb(t_list **stack_b)
 {
-	if (rotate(stack.b) == -1)
+	if (rotate(stack_b) == -1)
 		return (-1);
 	ft_putendl_fd("rb", 1);
 	return (0);
 }
 
-int	rr(t_stack stack)
+int	rr(t_list **stack_a, t_list **stack_b)
 {
-	if ((ft_lstsize(stack.a) < 2) || (ft_lstsize(stack.b) < 2))
+	if ((ft_lstsize(*stack_a) < 2) || (ft_lstsize(*stack_b) < 2))
 		return (-1);
-	rotate(stack.a);
-	rotate(stack.b);
+	rotate(stack_a);
+	rotate(stack_b);
 	ft_putendl_fd("rr", 1);
 	return (0);
-}
+}*/
 
-int	rotate(t_list *stack)
+void	rotate(int *array, int size, char *direction, char *list)
 {
-	t_list	*head;
-	t_list	*tail;
+	int	tmp;
 
-	if (ft_lstsize(stack) < 2)
-		return (-1);
-	head = stack;
-	tail = ft_lstlast(head);
-	stack = head->next;
-	head->next = NULL;
-	tail->next = head;
-	return (0);
+	if (size < 0)
+		return ;
+	if (ft_strncmp(direction, "up", 5) == 0)
+	{
+		tmp = array[0];
+		ft_memmove(array, array + 1, sizeof(int) * (size - 1));
+		array[size - 1] = tmp;
+		write(1, "r", 1);
+	}
+	else if (ft_strncmp(direction, "down", 5) == 0)
+	{
+		tmp = array[size - 1];
+		ft_memmove(array + 1, array, sizeof(int) * (size - 1));
+		array[0] = tmp;
+		write(1, "rr", 2);
+	}
+	ft_putendl_fd(list, 1);
 }

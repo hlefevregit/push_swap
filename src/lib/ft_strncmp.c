@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 12:53:37 by hulefevr          #+#    #+#             */
-/*   Updated: 2024/05/22 16:15:21 by hulefevr         ###   ########.fr       */
+/*   Created: 2024/04/22 10:32:40 by hulefevr          #+#    #+#             */
+/*   Updated: 2024/05/23 15:49:10 by hulefevr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	ft_lstadd_back(t_list **stack, t_list *new)
+int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 {
-	t_list	*n;
+	unsigned int	i;
 
-	if (*stack)
-	{
-		n = ft_lstlast(*stack);
-		n->next = new;
-		new->next = NULL;
-	}
+	i = 0;
+	while ((s1[i] && s2[i]) && (s1[i] == s2[i]) && i < n)
+		i++;
+	if (s1[i] == s2[i] || i == n)
+		return (0);
 	else
-	{
-		*stack = new;
-		(*stack)->next = NULL;
-	}
+		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

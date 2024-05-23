@@ -6,7 +6,7 @@
 #    By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 12:55:59 by hulefevr          #+#    #+#              #
-#    Updated: 2024/05/22 17:00:40 by hulefevr         ###   ########.fr        #
+#    Updated: 2024/05/23 16:01:17 by hulefevr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,28 +14,23 @@ NAME = push_swap
 
 SRCS =	./src/push_swap.c \
 		./src/utils.c \
-		./src/ft_strerror.c \
 		./src/ft_check_args.c \
 		./src/sort/radix_sort.c  \
-		./src/sort/srt_3_to_5.c \
 		./src/op/op_p.c \
 		./src/op/op_r.c \
-		./src/op/op_rr.c \
 		./src/op/op_s.c \
 		./src/lib/ft_atoi.c \
 		./src/lib/ft_isdigit.c \
-		./src/lib/ft_lstadd_back.c \
-		./src/lib/ft_lstadd_front.c \
-		./src/lib/ft_lstclear.c \
-		./src/lib/ft_lstnew.c \
-		./src/lib/ft_lstsize.c \
 		./src/lib/ft_split.c \
 		./src/lib/ft_strlen.c \
 		./src/lib/ft_putstr_fd.c \
 		./src/lib/ft_putendl_fd.c \
-		./src/lib/ft_lstlast.c \
 		./src/lib/ft_strlcpy.c \
 		./src/lib/ft_putchar_fd.c \
+		./src/lib/ft_strdup.c \
+		./src/lib/ft_strncmp.c \
+		./src/lib/ft_memmove.c \
+		./src/lib/ft_strjoin.c \
 
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 

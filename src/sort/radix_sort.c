@@ -6,63 +6,100 @@
 /*   By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:44:31 by hulefevr          #+#    #+#             */
-/*   Updated: 2024/05/22 18:30:51 by hulefevr         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:47:50 by hulefevr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-static int	get_max_bits(t_list *stack)
+void	sort_three_elements(t_stack *s)
 {
-	t_list	*head;
-	int		max;
-	int		max_bits;
-
-	head = stack;
-	max = head->index;
-	max_bits = 0;
-	while (head && head->next)
+	if (s->a[2] != 2)
 	{
-		if (head->index > max)
-			max = head->index;
-		head = head->next;
+		if (s->a[0] == 2)
+			rotate(s->a, s->a_size, "up", "a");
+		else
+			rotate(s->a, s->a_size, "down", "a");
 	}
-	while ((max >> max_bits) != 0)
-	{
-		max_bits++;
-	}
-	return (max_bits);
+	if (s->a[0] > s->a[1])
+		swap("sa", s->a, s->a_size);
 }
 
-void	radix_sort(t_stack stack)
+void	sort_four_to_five_elements(t_stack *s)
 {
-	t_list	*head_a;
-	int		i;
-	int		j;
-	int		size;
-	int		max_bits;
+	while (s->b_size <= 1)
+	{
+		if (s->a[0] == 0 || s->a[0] == 1)
+			push("pb", s);
+		else
+			rotate(s->a, s->a_size, "up", "a");
+	}
+	if (s->b[0] == 0)
+		swap("sb", s->b, s->b_size);
+	if (s->a[2] != 4)
+	{
+		if (s->a[0] == 4)
+			rotate(s->a, s->a_size, "up", "a");
+		else
+			rotate(s->a, s->a_size, "down", "a");
+	}
+	if (s->a[0] > s->a[1])
+		swap("sa", s->a, s->a_size);
+	push("pa", s);
+	push("pa", s);
+}
+
+int	is_array_sorted(t_stack *s)
+{
+	int	i;
 
 	i = 0;
-	printf("JYSUIS\n");
-	head_a = stack.a;
-	printf("head_a = %i\n", head_a->content);
-	size = ft_lstsize(head_a);
-	printf("size = %i\n", size);
-	max_bits = get_max_bits(head_a);
-	printf("max_bits = %i\n", max_bits);
-	while (i < max_bits)
+	while (i < s->a_size - 1)
 	{
-		j = 0;
-		while (j++ < size)
-		{
-			head_a = stack.a;
-			if (((head_a->index >> i) & 1) == 1)
-				ra(stack);
-			else
-				pb(stack);
-		}
-		while (ft_lstsize(stack.b) != 0)
-			pa(stack);
+		if (s->a[i] > s->a[i + 1])
+			return (0);
 		i++;
 	}
+	return (1);
+}
+
+static void	radix_sort_stack_b(t_stack *s, int b_size, int bit_size, int j)
+{
+	while (b_size-- && j <= bit_size && !is_array_sorted(s))
+	{
+		if (((s->b[0] >> j) & 1) == 0)
+			rotate(s->b, s->b_size, "up", "b");
+		else
+			push("pa", s);
+	}
+	if (is_array_sorted(s))
+		while (s->b_size != 0)
+			push("pa", s);
+}
+
+void	radix_sort(t_stack *s)
+{
+	int	j;
+	int	bit_size;
+	int	size;
+
+	bit_size = 0;
+	size = s->a_size;
+	while (size > 1 && ++bit_size)
+		size /= 2;
+	j = -1;
+	while (++j <= bit_size)
+	{
+		size = s->a_size;
+		while (size-- && !is_array_sorted(s))
+		{
+			if (((s->a[0] >> j) & 1) == 0)
+				push("pb", s);
+			else
+				rotate(s->a, s->a_size, "up", "a");
+		}
+		radix_sort_stack_b(s, s->b_size, bit_size, j + 1);
+	}
+	while (s->b_size != 0)
+		push("pa", s);
 }

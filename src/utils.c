@@ -6,75 +6,96 @@
 /*   By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:26:28 by hulefevr          #+#    #+#             */
-/*   Updated: 2024/05/22 18:28:21 by hulefevr         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:02:08 by hulefevr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static t_list	*get_next_min(t_list *stack)
+void	create_index(t_stack *s)
 {
-	t_list	*head;
-	t_list	*min;
-	int		has_min;
+	int		i;
+	int		j;
+	int		k;
+	int		*new_a;
 
-	min = NULL;
-	has_min = 0;
-	head = stack;
-	if (head)
+	new_a = malloc(s->a_size * sizeof * new_a);
+	if (new_a == NULL)
+		free_and_exit_with_message(s, "Error\n");
+	i = -1;
+	while (++i < s->a_size)
 	{
-		while (head)
-		{
-			if ((head->index < 0) && (!has_min || head->content < min->content))
-			{
-				min = head;
-				has_min = 1;
-			}
-			head = head->next;
-		}
+		k = 0;
+		j = -1;
+		while (++j < s->a_size)
+			if (s->a[i] > s->a[j])
+				k++;
+		new_a[i] = k;
 	}
-	return (min);
+	i = s->a_size;
+	while (i--)
+		s->a[i] = new_a[i];
+	free(new_a);
 }
 
-void	index_stack(t_list *stack)
+int	ft_atol(const char *n, t_stack *s)
 {
-	t_list	*head;
-	int		index;
+	int			i;
+	long		sign;
+	long long	res;
 
-	index = 0;
-	head = get_next_min(stack);
-	while (head)
+	res = 0;
+	sign = 1;
+	i = 0;
+	while (n[i] == ' ' || (n[i] >= '\t' && n[i] <= '\r'))
+		i++;
+	if ((n[i] == '+' || n[i] == '-'))
 	{
-		head->index = index++;
-		head = get_next_min(stack);
+		if (n[i] == '-')
+			sign = -1;
+		i++;
 	}
+	while (n[i])
+	{
+		if (res > 2147483647 || (res * sign) < -2147483648 || ft_strlen(n) > 11)
+			free_and_exit_with_message(s, "Error\n");
+		if (!(n[i] >= '0' && n[i] <= '9'))
+			free_and_exit_with_message(s, "Error\n");
+		res = res * 10 + (n[i++] - '0');
+	}
+	return ((int)(res * sign));
 }
 
-int	is_sorted(t_list *stack)
+void	free_and_exit_with_message(t_stack *s, char *msg)
 {
-	t_list	*head;
-
-	head = stack;
-	while (head && head->next)
+	if (msg)
+		write(2, msg, ft_strlen(msg));
+	if (s != NULL)
 	{
-		if (head->content > head->next->content)
-			return (0);
-		head = head->next;
+		if (s->a != NULL)
+			free(s->a);
+		if (s->b != NULL)
+			free(s->b);
+		if (s->args != NULL)
+			free(s->args);
+		if (s != NULL)
+			free(s);
 	}
-	return (1);
+	exit(EXIT_SUCCESS);
 }
 
-void	free_stack(t_list *stack)
+size_t	ft_count_words(char const *s, char c)
 {
-	t_list	*head;
-	t_list	*tmp;
+	size_t	words;
+	size_t	i;
 
-	head = stack;
-	while (head)
+	words = 0;
+	i = 0;
+	while (s[i])
 	{
-		tmp = head;
-		head = head->next;
-		free(tmp);
+		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+			words++;
+		i++;
 	}
-	// free(stack);
+	return (words);
 }

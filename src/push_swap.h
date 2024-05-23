@@ -6,7 +6,7 @@
 /*   By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:59:01 by hulefevr          #+#    #+#             */
-/*   Updated: 2024/05/22 17:38:04 by hulefevr         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:00:40 by hulefevr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,61 +17,50 @@
 
 typedef struct	s_stack
 {
-	t_list	*a;
-	t_list	*b;
+	int		*a;
+	int		*b;
+	int		a_size;
+	int		b_size;
+	char	*args;
 }				t_stack;
 
-int		ft_strerror(void);
 int		ft_check_args(int ac, char **av);
-int		is_sorted(t_list *stack);
+int		ft_atol(const char *n, t_stack *s);
+int		is_array_sorted(t_stack *s);
 
-void	index_stack(t_list *stack);
-void	ft_free(char **arg);
-void	free_stack(t_list *stack);
-void	sort_3_to_5(t_stack stack);
-void	radix_sort(t_stack stack);
+void	free_and_exit_with_message(t_stack *s, char *msg);
+void	validate_arguments(int argc, char **argv);
+void	parse_numbers(t_stack *s);
+void	exit_if_sorted_or_has_duplicate(t_stack *s, int i);
+void	create_index(t_stack *s);
+void	radix_sort(t_stack *s);
+void	sort_four_to_five_elements(t_stack *s);
+void	sort_three_elements(t_stack *s);
 
 /************LIBFT****************/
 
 int		ft_isdigit(int c);
 int		ft_atoi(const char *str);
-int		ft_lstsize(t_list *head);
+int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
 
-void	ft_lstadd_back(t_list **stack, t_list *new);
-void	ft_lstadd_front(t_list **stack, t_list *new);
-void	ft_lstclear(t_list *lst);
 void	ft_putstr_fd(char *str, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
+void	*ft_memmove(void *dst, const void *src, size_t len);
 
 size_t	ft_strlen(const char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-
-t_list	*ft_lstnew(int value);
-t_list	*ft_lstlast(t_list *head);
+size_t	ft_count_words(char const *s, char c);
 
 char	**ft_split(char const *s, char c);
 
+char	*ft_strdup(const char *src);
+char	*ft_strjoin(char const *s1, char const *s2);
+
 /**********OPERATORS***************/
 
-int		pb(t_stack stack);
-int		pa(t_stack stack);
-
-int		ra(t_stack stack);
-int		rb(t_stack stack);
-int		rr(t_stack stack);
-
-int		rra(t_stack stack);
-int		rrb(t_stack stack);
-int		rrr(t_stack stack);
-
-int		sa(t_stack stack);
-int		sb(t_stack stack);
-int		ss(t_stack stack);
-
-int		push(t_list *stack_to, t_list *stack_from);
-int		swap(t_list *stack);
-int		reverse_rotate(t_list *stack);
-int		rotate(t_list *stack);
+void	swap(char *str, int *array, int size);
+void	push(char *str, t_stack *s);
+void	rotate(int *array, int size, char *direction, char *list);
 
 #endif

@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strerror.c                                      :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hulefevr <hulefevr@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 13:07:44 by hulefevr          #+#    #+#             */
-/*   Updated: 2024/05/22 13:14:18 by hulefevr         ###   ########.fr       */
+/*   Created: 2024/04/22 11:44:12 by hulefevr          #+#    #+#             */
+/*   Updated: 2024/05/23 15:31:57 by hulefevr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
-int	ft_strerror(void)
+char	*ft_strdup(const char *src)
 {
-	ft_putstr_fd("Error\n", 2);
-	return (-1);
+	char			*str;
+	unsigned int	i;
+
+	str = malloc(sizeof(char) * ft_strlen((char *)src) + 1);
+	i = 0;
+	if (str == 0)
+		return (0);
+	while (src[i])
+	{
+		str[i] = src[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }
